@@ -8,6 +8,11 @@ namespace Graphe.Algo
         public Dictionary<T, List<Predecesseur<T>>> Predecesseurs { get; set; } = new Dictionary<T, List<Predecesseur<T>>>();
         public Dictionary<T, List<Predecesseur<T>>> Successeurs { get; set; } = new Dictionary<T, List<Predecesseur<T>>>();
 
+        public Graphe()
+        {
+
+        }
+        
         // Ajout noeud
         public void AjouterNoeud(T noeud)
         {
@@ -111,6 +116,70 @@ namespace Graphe.Algo
                 return EstAdjacent(A, B) == 1 ? Predecesseurs[B].Single(x => x.Noeud.Equals(A)).Capacite : double.PositiveInfinity;
             }
         }
+
+        // Niveau 0
+        private List<T> GetSansPredecesseur()
+        {
+            List<T> resultat = new List<T>();
+            foreach(var item in Predecesseurs.Keys)
+            {
+                if(Predecesseurs[item].Count == 0)
+                {
+                    resultat.Add(item);
+                }
+            }
+            return resultat;
+        }
+
+        // Cloner predecesseur
+        private Graphe<T> Cloner()
+        {
+            return new Graphe<T>()
+            {
+                Predecesseurs = this.Predecesseurs.ToDictionary(e => e.Key, e => e.Value),
+                Successeurs = this.Successeurs.ToDictionary(e => e.Key, e => e.Value)
+            };
+        }
+
+        // Supprimer noeud
+        private void SupprimerNoeud(Dictionary<T, List<Predecesseur<T>>> source, T noeud)
+        {
+            source.Remove(noeud);
+        }
+
+        // Supprimer plusieurs noeuds
+        private void SupprimerNoeud(Dictionary<T, List<Predecesseur<T>>> source, List<T> noeud)
+        {
+            foreach(T item in noeud)
+            {
+                SupprimerNoeud(source, noeud);
+            }
+        }
+
+        //public List<List<T>> DecomposerEnNiveau()
+        //{
+        //    List<List<T>> resultat = new List<List<T>>();
+        //    var clone = Cloner();
+        //    int index = 0;
+
+        //    Niveau 0
+        //    List<T> niveau0 = GetSansPredecesseur();
+        //    resultat.Add(niveau0);
+        //    SupprimerNoeud(clone, niveau0);
+
+        //    Niveau 1.....
+        //    while (clone.Count != 0)
+        //    {
+        //        foreach (var item in resultat[index])
+        //        {
+        //            foreach (var succ in item)
+        //        }
+        //        index++;
+        //    }
+
+        //    return resultat;
+        //}
+
 
     }
 }
