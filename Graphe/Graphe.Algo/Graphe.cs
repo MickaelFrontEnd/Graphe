@@ -5,13 +5,12 @@ namespace Graphe.Algo
 {
     class Graphe<T>
     {
+        // Propriété
         public Dictionary<T, List<Predecesseur<T>>> Predecesseurs { get; set; } = new Dictionary<T, List<Predecesseur<T>>>();
         public Dictionary<T, List<Predecesseur<T>>> Successeurs { get; set; } = new Dictionary<T, List<Predecesseur<T>>>();
 
-        public Graphe()
-        {
-
-        }
+        // Constructeur
+        public Graphe(){ }
         
         // Ajout noeud
         public void AjouterNoeud(T noeud)
@@ -71,21 +70,13 @@ namespace Graphe.Algo
         // Degré moins
         public int GetDegreMoins(T noeud)
         {
-            if(Predecesseurs.ContainsKey(noeud))
-            {
-                return Predecesseurs[noeud].Count;
-            }
-            return 0;
+            return Predecesseurs[noeud]?.Count ?? 0;
         }
 
         // Degré plus
         public int GetDegrePlus(T noeud)
         {
-            if(Successeurs.ContainsKey(noeud))
-            {
-                return Successeurs[noeud].Count;
-            }
-            return 0;
+            return Successeurs[noeud]?.Count ?? 0;
         }
 
         // Degré
@@ -97,7 +88,7 @@ namespace Graphe.Algo
         // Adjacent
         public int EstAdjacent(T A, T B)
         {
-            if(Predecesseurs.ContainsKey(B))
+            if (Predecesseurs.ContainsKey(B))
             {
                 return Predecesseurs[B].Any(x => x.Noeud.Equals(A)) ? 1 : 0;
             }
@@ -117,22 +108,22 @@ namespace Graphe.Algo
             }
         }
 
-        // Niveau 0
-        private List<T> GetSansPredecesseur()
+        // Noeud sans predecesseur
+        public List<T> GetSansPredecesseur()
         {
             List<T> resultat = new List<T>();
-            foreach(var item in Predecesseurs.Keys)
+            foreach(var key in Predecesseurs.Keys)
             {
-                if(Predecesseurs[item].Count == 0)
+                if(Predecesseurs[key].Count == 0)
                 {
-                    resultat.Add(item);
+                    resultat.Add(key);
                 }
             }
             return resultat;
         }
 
         // Cloner predecesseur
-        private Graphe<T> Cloner()
+        public Graphe<T> Cloner()
         {
             return new Graphe<T>()
             {
@@ -142,13 +133,18 @@ namespace Graphe.Algo
         }
 
         // Supprimer noeud
-        private void SupprimerNoeud(Dictionary<T, List<Predecesseur<T>>> source, T noeud)
+        public void SupprimerNoeud(Dictionary<T, List<Predecesseur<T>>> source, T noeud)
         {
             source.Remove(noeud);
+
+            foreach (var key in source.Keys)
+            {
+                source[key].RemoveAll(x => x.Noeud.Equals(noeud));
+            }
         }
 
         // Supprimer plusieurs noeuds
-        private void SupprimerNoeud(Dictionary<T, List<Predecesseur<T>>> source, List<T> noeud)
+        public void SupprimerNoeud(Dictionary<T, List<Predecesseur<T>>> source, List<T> noeud)
         {
             foreach(T item in noeud)
             {
@@ -156,30 +152,47 @@ namespace Graphe.Algo
             }
         }
 
-        //public List<List<T>> DecomposerEnNiveau()
-        //{
-        //    List<List<T>> resultat = new List<List<T>>();
-        //    var clone = Cloner();
-        //    int index = 0;
+        // Suppression noeud
+        public void SupprimerNoeud(T noeud)
+        {
+            SupprimerNoeud(this.Predecesseurs, noeud);
+            SupprimerNoeud(this.Successeurs, noeud);
+        }
 
-        //    Niveau 0
-        //    List<T> niveau0 = GetSansPredecesseur();
-        //    resultat.Add(niveau0);
-        //    SupprimerNoeud(clone, niveau0);
+        // Suppression plusieurs noeuds
+        public void SupprimerNoeud(List<T> noeud)
+        {
+            SupprimerNoeud(this.Predecesseurs, noeud);
+            SupprimerNoeud(this.Successeurs, noeud);
+        }
 
-        //    Niveau 1.....
-        //    while (clone.Count != 0)
-        //    {
-        //        foreach (var item in resultat[index])
-        //        {
-        //            foreach (var succ in item)
-        //        }
-        //        index++;
-        //    }
+        // Suppression noeud sans predecesseur
+        public List<T> SupprimerSansPredecesseur()
+        {
+            List<T> resultat = GetSansPredecesseur();
+            foreach(T noeud in resultat)
+            {
+                SupprimerNoeud(noeud);
+            }
+            return resultat;
+        }
 
-        //    return resultat;
-        //}
+        // Savoir si une graphe est vide
+        public bool EstVide()
+        {
+            return this.Predecesseurs.Count == 0 && this.Successeurs.Count == 0;
+        }
 
-
+        // Decomposition en niveau
+        public List<List<T>> DecomposerEnNiveau()
+        {
+            List<List<T>> resultat = new List<List<T>>();
+            Graphe<T> graphe = Cloner();
+            while(!graphe.EstVide())
+            {
+                resultat.Add(graphe.SupprimerSansPredecesseur());
+            }
+            return resultat;
+        }
     }
 }

@@ -1,11 +1,13 @@
-﻿namespace Graphe.Algo
+﻿using System.Collections.Generic;
+
+namespace Graphe.Algo
 {
     class Program
     {
         static void Main(string[] args)
         {
             Graphe<string> graphe = new Graphe<string>();
-            string A = "A", B = "B", C = "C", D = "D";
+            string A = "A", B = "B", C = "C", D = "D", E = "E";
 
             graphe.AjouterNoeud(A);
             graphe.AjouterNoeud(B);
@@ -14,17 +16,21 @@
 
             graphe.AjouterArc(A, B, 2);
             graphe.AjouterArc(A, C, 1);
+            graphe.AjouterArc(A, E, 10);
             graphe.AjouterArc(B, D, 5);
             graphe.AjouterArc(B, C, 7);
             graphe.AjouterArc(D, C, 3);
 
-            //var item = graphe.ClonerPredecesseur();
-            //item[B] = null;
-
-
-            //System.Console.WriteLine(graphe.Predecesseurs[B]);
-            //System.Console.WriteLine(item[B]);
-            //System.Console.ReadLine();
+            List<List<string>> niveaux = graphe.DecomposerEnNiveau();
+            foreach(List<string> niveau in niveaux)
+            {
+                foreach(string noeud in niveau)
+                {
+                    System.Console.Write(noeud + " ");
+                }
+                System.Console.WriteLine();
+            }
+            System.Console.ReadLine();
         }
     }
 }
