@@ -252,5 +252,62 @@ namespace Graphe.Algo
             }
             return null;
         }
+
+        // Parcours en largeur
+        public void ParcourirEnLargeur(Arbre<T> resultat, List<T> noeudParcourues, T noeudDepart)
+        {
+            List<Predecesseur<T>> successeurs = GetSuccesseur(noeudDepart);
+            List<Arbre<T>> arbres = new List<Arbre<T>>();
+            List<Predecesseur<T>> parcoursSuivants = new List<Predecesseur<T>>();
+
+            // Départ 
+            if(noeudParcourues.Count == 0)
+            {
+                noeudParcourues.Add(noeudDepart);
+                resultat.AjouterPere(noeudDepart);
+            }
+
+            // Ajouter chaque successeur s'il ne sont pas encore visité
+            foreach (var successeur in successeurs)
+            {
+                if(!noeudParcourues.Exists(x => x.Equals(successeur)))
+                {
+                    // Création d'un nouveau noeud
+                    Arbre<T> arbre = new Arbre<T>();
+                    arbre.AjouterPere(successeur.Noeud);
+
+                    resultat.AjouterFils(arbre);
+                    arbres.Add(arbre);
+                    
+                    noeudParcourues.Add(successeur.Noeud);
+                    parcoursSuivants.Add(successeur);
+                }
+            }
+
+            for(int i = 0; i < parcoursSuivants.Count; i++)
+            {
+                ParcourirEnLargeur(arbres[i], noeudParcourues, parcoursSuivants[i].Noeud);
+            }
+        }
+
+        // Parcours en largeur
+        public Arbre<T> ParcourirEnLargeur(T noeudDepart)
+        {
+            Arbre<T> resultat = new Arbre<T>();
+            List<T> noeudParcourues = new List<T>();
+            ParcourirEnLargeur(resultat, noeudParcourues, noeudDepart);
+            return resultat;
+        }
+
+        // Parcours en largeur
+        public Arbre<T> ParcourirEnLargeur()
+        {
+            List<T> noeuds = GetSansPredecesseur();
+            if (noeuds.Count != 0)
+            {
+                return ParcourirEnLargeur(noeuds[0]);
+            }
+            return null;
+        }
     }
 }
