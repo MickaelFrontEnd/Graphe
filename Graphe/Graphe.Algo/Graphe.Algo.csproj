@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arbre.cs" />
     <Compile Include="Graphe.cs" />
     <Compile Include="Predecesseur.cs" />
     <Compile Include="Program.cs" />

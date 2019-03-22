@@ -10,16 +10,16 @@ namespace Graphe.Algo
         public Dictionary<T, List<Predecesseur<T>>> Successeurs { get; set; } = new Dictionary<T, List<Predecesseur<T>>>();
 
         // Constructeur
-        public Graphe(){ }
-        
+        public Graphe() { }
+
         // Ajout noeud
         public void AjouterNoeud(T noeud)
         {
-            if(!Predecesseurs.ContainsKey(noeud))
+            if (!Predecesseurs.ContainsKey(noeud))
             {
                 Predecesseurs.Add(noeud, new List<Predecesseur<T>>());
             }
-            if(!Successeurs.ContainsKey(noeud))
+            if (!Successeurs.ContainsKey(noeud))
             {
                 Successeurs.Add(noeud, new List<Predecesseur<T>>());
             }
@@ -48,7 +48,7 @@ namespace Graphe.Algo
             AjouterNoeud(noeud);
             Predecesseurs[noeud].AddRange(predecesseurs);
 
-            foreach(var item in predecesseurs)
+            foreach (var item in predecesseurs)
             {
                 AjouterNoeud(item.Noeud);
                 Successeurs[item.Noeud].Add(new Predecesseur<T>(noeud));
@@ -98,7 +98,7 @@ namespace Graphe.Algo
         // Capacite (coût)
         public double GetCout(T A, T B)
         {
-            if(A.Equals(B))
+            if (A.Equals(B))
             {
                 return 0;
             }
@@ -112,9 +112,9 @@ namespace Graphe.Algo
         public List<T> GetSansPredecesseur()
         {
             List<T> resultat = new List<T>();
-            foreach(var key in Predecesseurs.Keys)
+            foreach (var key in Predecesseurs.Keys)
             {
-                if(Predecesseurs[key].Count == 0)
+                if (Predecesseurs[key].Count == 0)
                 {
                     resultat.Add(key);
                 }
@@ -146,7 +146,7 @@ namespace Graphe.Algo
         // Supprimer plusieurs noeuds
         public void SupprimerNoeud(Dictionary<T, List<Predecesseur<T>>> source, List<T> noeud)
         {
-            foreach(T item in noeud)
+            foreach (T item in noeud)
             {
                 SupprimerNoeud(source, noeud);
             }
@@ -170,7 +170,7 @@ namespace Graphe.Algo
         public List<T> SupprimerSansPredecesseur()
         {
             List<T> resultat = GetSansPredecesseur();
-            foreach(T noeud in resultat)
+            foreach (T noeud in resultat)
             {
                 SupprimerNoeud(noeud);
             }
@@ -188,11 +188,69 @@ namespace Graphe.Algo
         {
             List<List<T>> resultat = new List<List<T>>();
             Graphe<T> graphe = Cloner();
-            while(!graphe.EstVide())
+            while (!graphe.EstVide())
             {
                 resultat.Add(graphe.SupprimerSansPredecesseur());
             }
             return resultat;
+        }
+
+        // Obtient tout les successeurs
+        public List<Predecesseur<T>> GetSuccesseur(T noeud)
+        {
+            if(Successeurs.ContainsKey(noeud))
+            {
+                return Successeurs[noeud];
+            }
+            return null;
+        }
+
+        // Parcours en profondeur
+        public void ParcourirEnProfondeur(Arbre<T> resultat,List<T> noeudParcourues, T noeudDepart)
+        {    
+            // Pere de l'arbre
+            if(noeudParcourues.Count == 0)
+            {
+                resultat.AjouterPere(noeudDepart);
+            }
+
+            // Contient tout les noeuds déjà parcourue
+            noeudParcourues.Add(noeudDepart);
+
+            // Successeurs
+            List<Predecesseur<T>> successeurs = GetSuccesseur(noeudDepart);
+            foreach(var successeur in successeurs)
+            {
+                if(!noeudParcourues.Exists(x => x.Equals(successeur.Noeud)))
+                {
+                    // Ajout d'un nouveau fils
+                    Arbre<T> arbre = new Arbre<T>();
+                    arbre.AjouterPere(successeur.Noeud);
+                    resultat.AjouterFils(arbre);
+
+                    ParcourirEnProfondeur(arbre, noeudParcourues,successeur.Noeud);
+                }
+            }
+        }
+
+        // Parcours en profondeur
+        public Arbre<T> ParcourirEnProfondeur(T noeudDepart)
+        {
+            Arbre<T> resultat = new Arbre<T>();
+            List<T> noeudParcourues = new List<T>();
+            ParcourirEnProfondeur(resultat, noeudParcourues, noeudDepart);
+            return resultat;
+        }
+
+        // Parcours en profondeur
+        public Arbre<T> ParcourirEnProfondeur()
+        {
+            List<T> noeuds = GetSansPredecesseur();
+            if(noeuds.Count != 0)
+            {
+                return ParcourirEnProfondeur(noeuds[0]);
+            }
+            return null;
         }
     }
 }
