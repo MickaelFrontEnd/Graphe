@@ -16,21 +16,21 @@ namespace Graphe.Algo
             graphe.AjouterNoeud(E);
             graphe.AjouterNoeud(F);
 
-            graphe.AjouterArc(A, B, 2);
-            graphe.AjouterArc(A, C, 1);
-            graphe.AjouterArc(A, E, 1);
-            graphe.AjouterArc(B, D, 5);
-            graphe.AjouterArc(B, C, 7);
-            graphe.AjouterArc(C, F, 5);
-            graphe.AjouterArc(D, C, 3);
+            graphe.AjouterArc(A, B, 7);
+            graphe.AjouterArc(A, D, 15);
+            graphe.AjouterArc(B, C, 12);
+            graphe.AjouterArc(B, F, 16);
+            graphe.AjouterArc(B, E, 4);
+            graphe.AjouterArc(D, C, 5);
+            graphe.AjouterArc(D, E, 2);
+            graphe.AjouterArc(C, F, 3);
+            graphe.AjouterArc(E, F, 14);
 
-            Arbre<string> arbre = graphe.ParcourirEnLargeur();
-            System.Console.Write("Fils de A: ");
-            foreach (Arbre<string> fils in arbre.Fils[1].Fils)
-            {
-                System.Console.Write(fils.Noeud + " ");
-            }
+            Arbre<string> arbre = graphe.GetPlusLongChemin(A);
+
+            System.Console.WriteLine(arbre.Fils[0].Fils[0].Fils[0].Noeud);
             System.Console.ReadLine();
+
         }
     }
 }
