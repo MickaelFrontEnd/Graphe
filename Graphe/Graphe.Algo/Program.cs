@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Graphe.Algo
+namespace Graphe.Base
 {
     class Program
     {

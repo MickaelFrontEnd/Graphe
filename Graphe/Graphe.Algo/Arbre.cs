@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Graphe.Algo
+namespace Graphe.Base
 {
-    class Arbre<T>
+    public class Arbre<T>
     {
         public T Noeud { get; set; }
         public List<Arbre<T>> Fils { get; set; }
@@ -26,6 +26,23 @@ namespace Graphe.Algo
         public void AjouterFils(Arbre<T> arbre)
         {
             this.Fils.Add(arbre);
+        }
+        
+        // Rechercher un fils
+        public Arbre<T> GetFils(T fils)
+        {
+            foreach (var item in Fils)
+            {
+                if (item.Noeud.Equals(fils))
+                {
+                    return item;
+                }
+                else
+                {
+                    GetFils(item.Noeud);
+                }
+            }
+            return null;
         }
     }
 }

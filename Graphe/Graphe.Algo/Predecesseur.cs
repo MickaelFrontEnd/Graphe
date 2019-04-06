@@ -1,8 +1,8 @@
 ﻿
 
-namespace Graphe.Algo
+namespace Graphe.Base
 {
-    class Predecesseur<T>
+    public class Predecesseur<T>
     {
         public T Noeud { get; set; }
         public double Capacite { get; set; }

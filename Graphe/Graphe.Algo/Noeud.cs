@@ -1,9 +1,9 @@
 ﻿
 using System.Collections.Generic;
 
-namespace Graphe.Algo
+namespace Graphe.Base
 {
-    class Noeud<T>
+    public class Noeud<T>
     {
         public T Depart { get; set; }
         public T Arrive { get; set; }

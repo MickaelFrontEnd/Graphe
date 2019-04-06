@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Graphe.Algo
+namespace Graphe.Base
 {
-    class Graphe<T>
+    public partial class Graphe<T>
     {
         // Propriété
         public Dictionary<T, List<Predecesseur<T>>> Predecesseurs { get; set; } = new Dictionary<T, List<Predecesseur<T>>>();
@@ -384,12 +384,6 @@ namespace Graphe.Algo
             List<T> sansPredecesseurs = GetSansPredecesseur();
             if (sansPredecesseurs.Count == 0) return null;
             return GetPlusCourtChemin(sansPredecesseurs[0]);
-        }
-
-        // Algorithme de Dijkstra / Plus court chemin
-        public Arbre<T> GetPlusCourtChemin(T depart, T arrive)
-        {
-            Arbre<T> arbre = GetPlusCourtChemin(depart);
         }
 
         // Algorthme de Dijkstra / Plus long chemin
