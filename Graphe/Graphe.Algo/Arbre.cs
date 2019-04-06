@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Graphe.Base
+namespace Graphe
 {
     public class Arbre<T>
     {

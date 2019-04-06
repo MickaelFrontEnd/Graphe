@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿
 
-namespace Graphe.Base
+using System.Collections.Generic;
+
+namespace Graphe
 {
     class Program
     {
@@ -26,11 +28,14 @@ namespace Graphe.Base
             graphe.AjouterArc(C, F, 3);
             graphe.AjouterArc(E, F, 14);
 
-            Arbre<string> arbre = graphe.GetPlusLongChemin(A);
+            Graphe<string> grapheTrie = graphe.TrierParDegresDecroissant();
 
-            System.Console.WriteLine(arbre.Fils[0].Fils[0].Fils[0].Noeud);
+            foreach (KeyValuePair<string, List<Predecesseur<string>>> entry in grapheTrie.Predecesseurs)
+            {
+                System.Console.WriteLine(entry.Key);
+            }
+
             System.Console.ReadLine();
-
         }
     }
 }

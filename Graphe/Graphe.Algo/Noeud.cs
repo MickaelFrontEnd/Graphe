@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace Graphe.Base
+namespace Graphe
 {
     public class Noeud<T>
     {

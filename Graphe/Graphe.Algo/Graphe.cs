@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Graphe.Base
+namespace Graphe
 {
     public partial class Graphe<T>
     {
@@ -312,103 +312,30 @@ namespace Graphe.Base
             return null;
         }
 
-        // Algorithme de Dijkstra
-        public void GetChemin(Arbre<T> resultat, List<Noeud<T>> choisies, List<Noeud<T>> nonChoisies, T depart, double cout, int sens = 0)
+        // Trier les noeuds par degrés decroissant
+        public Graphe<T> TrierParDegresDecroissant()
         {
-            // Initialisation
-            if (choisies.Count == 0)
+            Graphe<T> graphe = new Graphe<T>();
+            List<NoeudDegre<T>> noeuds = new List<NoeudDegre<T>>();
+
+            foreach (KeyValuePair<T,List<Predecesseur<T>>> entry in Predecesseurs)
             {
-                resultat.AjouterPere(depart);
-                choisies.Add(new Noeud<T>()
+                noeuds.Add(new NoeudDegre<T>()
                 {
-                    Depart = depart,
-                    Arrive = depart,
-                    Cout = 0
+                    Noeud = entry.Key,
+                    Degres = this.GetDegre(entry.Key)
                 });
             }
 
-            // Avoir tout les successeurs
-            List<Predecesseur<T>> successeurs = GetSuccesseur(depart);
+            noeuds.Sort((x1,x2) => x2.Degres - x1.Degres);
 
-            // Pour chaque successeur
-            foreach (var successeur in successeurs)
+            foreach(var noeud in noeuds)
             {
-                if (!choisies.Exists(x => x.Arrive.Equals(successeur.Noeud)))
-                {
-                    nonChoisies.Add(new Noeud<T>()
-                    {
-                        Depart = depart,
-                        Arrive = successeur.Noeud,
-                        Cout = cout + GetCout(depart, successeur.Noeud)
-                    });
-                }
+                graphe.Predecesseurs.Add(noeud.Noeud, Predecesseurs[noeud.Noeud]);
+                graphe.Successeurs.Add(noeud.Noeud, Successeurs[noeud.Noeud]);
             }
 
-            Noeud<T> noeud = sens == 0 ? Noeud<T>.GetPlusPetitCout(nonChoisies) : Noeud<T>.GetPlusGrandCout(nonChoisies);
-
-            if (noeud != null)
-            {
-                choisies.Add(noeud);
-                nonChoisies.Remove(noeud);
-                nonChoisies.RemoveAll(x => x.Arrive.Equals(noeud.Arrive));
-
-                Arbre<T> fils = new Arbre<T>();
-                fils.AjouterPere(noeud.Arrive);
-                resultat.AjouterFils(fils);
-
-                // Continue
-                GetChemin(fils, choisies, nonChoisies, noeud.Arrive, noeud.Cout, sens);
-            }
-        }
-
-        // Algorthme de Dijkstra / Plus court chemin
-        public void GetPlusCourtChemin(Arbre<T> resultat,List<Noeud<T>> choisies, List<Noeud<T>> nonChoisies, T depart,double cout)
-        {
-            GetChemin(resultat, choisies, nonChoisies, depart, 0, 0);
-        } 
-
-        // Algorithme de Dijkstra / Plus court chemin
-        public Arbre<T> GetPlusCourtChemin(T depart)
-        {
-            Arbre<T> resultat = new Arbre<T>();
-            List<Noeud<T>> choisies = new List<Noeud<T>>();
-            List<Noeud<T>> nonChoisies = new List<Noeud<T>>();
-
-            GetPlusCourtChemin(resultat, choisies, nonChoisies, depart, 0);
-            return resultat;
-        }
-
-        // Algorithme de Dijkstra / Plus court chemin
-        public Arbre<T> GetPlusCourtChemin()
-        {
-            List<T> sansPredecesseurs = GetSansPredecesseur();
-            if (sansPredecesseurs.Count == 0) return null;
-            return GetPlusCourtChemin(sansPredecesseurs[0]);
-        }
-
-        // Algorthme de Dijkstra / Plus long chemin
-        public void GetPlusLongChemin(Arbre<T> resultat, List<Noeud<T>> choisies, List<Noeud<T>> nonChoisies, T depart, double cout)
-        {
-            GetChemin(resultat, choisies, nonChoisies, depart, 0, 1);
-        }
-
-        // Algorithme de Dijkstra / Plus long chemin
-        public Arbre<T> GetPlusLongChemin(T depart)
-        {
-            Arbre<T> resultat = new Arbre<T>();
-            List<Noeud<T>> choisies = new List<Noeud<T>>();
-            List<Noeud<T>> nonChoisies = new List<Noeud<T>>();
-
-            GetPlusLongChemin(resultat, choisies, nonChoisies, depart, 0);
-            return resultat;
-        }
-
-        // Algorithme de Dijkstra / Plus long chemin
-        public Arbre<T> GetPlusLongChemin()
-        {
-            List<T> sansPredecesseurs = GetSansPredecesseur();
-            if (sansPredecesseurs.Count == 0) return null;
-            return GetPlusLongChemin(sansPredecesseurs[0]);
+            return graphe;
         }
     }
 }

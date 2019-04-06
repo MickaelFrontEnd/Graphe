@@ -1,6 +1,6 @@
 ﻿
 
-namespace Graphe.Base
+namespace Graphe
 {
     public class Predecesseur<T>
     {
