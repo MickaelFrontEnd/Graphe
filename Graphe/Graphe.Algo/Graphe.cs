@@ -95,6 +95,12 @@ namespace Graphe
             return 0;
         }
 
+        // Totalement adjacent
+        public bool EstTotalementAdjacent(T A, T B)
+        {
+            return EstAdjacent(A, B) == 1 || EstAdjacent(B, A) == 1;
+        }
+
         // Capacite (coût)
         public double GetCout(T A, T B)
         {
@@ -313,21 +319,29 @@ namespace Graphe
         }
 
         // Trier les noeuds par degrés decroissant
-        public Graphe<T> TrierParDegresDecroissant()
+        public Graphe<T> TrierParDegres(string ordre = "asc")
         {
             Graphe<T> graphe = new Graphe<T>();
             List<NoeudDegre<T>> noeuds = new List<NoeudDegre<T>>();
 
-            foreach (KeyValuePair<T,List<Predecesseur<T>>> entry in Predecesseurs)
+            foreach (KeyValuePair<T,List<Predecesseur<T>>> entree in Predecesseurs)
             {
                 noeuds.Add(new NoeudDegre<T>()
                 {
-                    Noeud = entry.Key,
-                    Degres = this.GetDegre(entry.Key)
+                    Noeud = entree.Key,
+                    Degres = this.GetDegre(entree.Key)
                 });
             }
 
-            noeuds.Sort((x1,x2) => x2.Degres - x1.Degres);
+            if(ordre.CompareTo("asc") == 0)
+            {
+                noeuds.Sort((x1, x2) => x1.Degres - x2.Degres);
+            }
+            else
+            {
+                noeuds.Sort((x1, x2) => x2.Degres - x1.Degres);
+            }
+            
 
             foreach(var noeud in noeuds)
             {
@@ -336,6 +350,24 @@ namespace Graphe
             }
 
             return graphe;
+        }
+
+        // Extraire juste les sommets
+        public List<T> ExtraireSommet()
+        {
+            List<T> resultat = new List<T>();
+            foreach (KeyValuePair<T, List<Predecesseur<T>>> entree in Predecesseurs)
+            {
+                resultat.Add(entree.Key);
+            }
+            return resultat;
+        }
+
+        // Extraire sommet + ordre  des degrés
+        public List<T> ExtraireSommet(string ordre = "asc")
+        {
+            Graphe<T> graphe = TrierParDegres(ordre);
+            return graphe.ExtraireSommet();
         }
     }
 }

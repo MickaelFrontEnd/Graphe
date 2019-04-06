@@ -9,30 +9,27 @@ namespace Graphe
         static void Main(string[] args)
         {
             Graphe<string> graphe = new Graphe<string>();
-            string A = "A", B = "B", C = "C", D = "D", E = "E", F = "F";
+            string A = "A", B = "B", C = "C", D = "D", E = "E", F = "F", G = "G";
 
             graphe.AjouterNoeud(A);
             graphe.AjouterNoeud(B);
             graphe.AjouterNoeud(C);
             graphe.AjouterNoeud(D);
-            graphe.AjouterNoeud(E);
-            graphe.AjouterNoeud(F);
+            //graphe.AjouterNoeud(E);
+            //graphe.AjouterNoeud(F);
+            //graphe.AjouterNoeud(G);
 
             graphe.AjouterArc(A, B, 7);
-            graphe.AjouterArc(A, D, 15);
-            graphe.AjouterArc(B, C, 12);
-            graphe.AjouterArc(B, F, 16);
-            graphe.AjouterArc(B, E, 4);
-            graphe.AjouterArc(D, C, 5);
-            graphe.AjouterArc(D, E, 2);
-            graphe.AjouterArc(C, F, 3);
-            graphe.AjouterArc(E, F, 14);
+            graphe.AjouterArc(B, C, 7);
+            graphe.AjouterArc(B, D, 7);
+            graphe.AjouterArc(C, D, 7);
 
-            Graphe<string> grapheTrie = graphe.TrierParDegresDecroissant();
 
-            foreach (KeyValuePair<string, List<Predecesseur<string>>> entry in grapheTrie.Predecesseurs)
+            List<NoeudCouleur<string>> ColorerGraphe = graphe.ColorerGraphe();
+            
+            foreach(var item in ColorerGraphe)
             {
-                System.Console.WriteLine(entry.Key);
+                System.Console.WriteLine(string.Format("{0}: {1}",item.Noeud,item.Couleur));
             }
 
             System.Console.ReadLine();
