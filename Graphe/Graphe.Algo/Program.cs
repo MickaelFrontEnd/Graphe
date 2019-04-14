@@ -8,29 +8,34 @@ namespace Graphe
     {
         static void Main(string[] args)
         {
-            Graphe<string> graphe = new Graphe<string>();
-            string A = "A", B = "B", C = "C", D = "D", E = "E", F = "F", G = "G";
+            Mpm mpm = new Mpm();
 
-            graphe.AjouterNoeud(A);
-            graphe.AjouterNoeud(B);
-            graphe.AjouterNoeud(C);
-            graphe.AjouterNoeud(D);
-            //graphe.AjouterNoeud(E);
-            //graphe.AjouterNoeud(F);
-            //graphe.AjouterNoeud(G);
+            Tache A = new Tache("A",2);
+            Tache B = new Tache("B",4);
+            Tache C = new Tache("C",4);
+            Tache D = new Tache("D",5);
+            Tache E = new Tache("E",6);
 
-            graphe.AjouterArc(A, B, 7);
-            graphe.AjouterArc(B, C, 7);
-            graphe.AjouterArc(B, D, 7);
-            graphe.AjouterArc(C, D, 7);
+            mpm.AjouterTache(A);
+            mpm.AjouterTache(B);
+            mpm.AjouterTache(C);
+            mpm.AjouterTache(D);
+            mpm.AjouterTache(E);
 
+            mpm.AjouterPredecesseur(C, A);
+            mpm.AjouterPredecesseur(D, A);
+            mpm.AjouterPredecesseur(D, B);
+            mpm.AjouterPredecesseur(E, C);
+            mpm.AjouterPredecesseur(E, D);
 
-            List<NoeudCouleur<string>> ColorerGraphe = graphe.ColorerGraphe();
-            
-            foreach(var item in ColorerGraphe)
+            mpm.OrdonnerTache();
+
+            foreach (var key in mpm.Graphe.Predecesseurs.Keys)
             {
-                System.Console.WriteLine(string.Format("{0}: {1}",item.Noeud,item.Couleur));
+                //System.Console.WriteLine(key.Nom + " " + key.Durree + " " + key.DebutPlutot + " " + key.DebutPlustard);
             }
+            
+            System.Console.WriteLine(A.MargeLibre);
 
             System.Console.ReadLine();
         }

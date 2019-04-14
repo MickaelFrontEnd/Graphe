@@ -48,6 +48,7 @@
     <Compile Include="Dijkstra.cs" />
     <Compile Include="FonctionUtilitaire.cs" />
     <Compile Include="Graphe.cs" />
+    <Compile Include="MPM.cs" />
     <Compile Include="Noeud.cs" />
     <Compile Include="Predecesseur.cs" />
     <Compile Include="Program.cs" />

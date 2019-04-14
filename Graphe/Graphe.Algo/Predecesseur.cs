@@ -8,6 +8,11 @@ namespace Graphe
         public double Capacite { get; set; }
         public double Flot { get; set; }
 
+        public Predecesseur()
+        {
+
+        }
+
         public Predecesseur(T noeud)
         {
             this.Noeud = noeud;
