@@ -85,6 +85,17 @@ namespace Graphe
             return GetDegreMoins(noeud) + GetDegrePlus(noeud);
         }
 
+        // Degré moins en tant que dictionnaire
+        public Dictionary<T,int> GetDegreMoins()
+        {
+            Dictionary<T, int> niveaux = new Dictionary<T, int>();
+            foreach (var key in Predecesseurs.Keys)
+            {
+                niveaux.Add(key, GetDegreMoins(key));
+            }
+            return niveaux;
+        }
+
         // Adjacent
         public int EstAdjacent(T A, T B)
         {
@@ -128,14 +139,28 @@ namespace Graphe
             return resultat;
         }
 
-        // Cloner predecesseur
-        public Graphe<T> Cloner()
+        // Noeud sans successeur
+        public List<T> GetSansSuccesseur()
         {
-            return new Graphe<T>()
+            List<T> resultat = new List<T>();
+            foreach (var key in Successeurs.Keys)
             {
-                Predecesseurs = this.Predecesseurs.ToDictionary(e => e.Key, e => e.Value),
-                Successeurs = this.Successeurs.ToDictionary(e => e.Key, e => e.Value)
-            };
+                if(Successeurs[key].Count == 0)
+                {
+                    resultat.Add(key);
+                }
+            }
+            return resultat;
+        }
+
+        public Dictionary<T, List<Predecesseur<T>>> Cloner(Dictionary<T, List<Predecesseur<T>>> originale)
+        {
+            Dictionary<T, List<Predecesseur<T>>> resultat = new Dictionary<T, List<Predecesseur<T>>>();
+            foreach(T key in originale.Keys)
+            {
+                resultat.Add(key, originale[key]);
+            }
+            return resultat;
         }
 
         // Supprimer noeud
@@ -192,15 +217,44 @@ namespace Graphe
         // Decomposition en niveau
         public List<List<T>> DecomposerEnNiveau()
         {
+            // Initialisation
+            Dictionary<T, int> degresMoins = GetDegreMoins();
+            List<T> dejaTraite = new List<T>();
             List<List<T>> resultat = new List<List<T>>();
-            Graphe<T> graphe = Cloner();
-            while (!graphe.EstVide())
+            List<Predecesseur<T>> successeurs;
+
+            // Niveau 1
+            List<T> niveau1 = GetSansPredecesseur();
+            resultat.Add(niveau1);
+            dejaTraite.AddRange(niveau1);
+
+            // Variable temporaire
+            List<T> temp = niveau1;
+            List<T> niveauEnCours = new List<T>();
+
+            while(dejaTraite.Count != Predecesseurs.Count)
             {
-                resultat.Add(graphe.SupprimerSansPredecesseur());
+                niveauEnCours = new List<T>();
+                foreach (var item in temp)
+                {
+                    successeurs = Successeurs[item];
+                    foreach(Predecesseur<T> successeur in successeurs)
+                    {
+                        degresMoins[successeur.Noeud]--;
+                        if(degresMoins[successeur.Noeud] == 0)
+                        {
+                            niveauEnCours.Add(successeur.Noeud);
+                            dejaTraite.Add(successeur.Noeud);
+                        }
+                    }
+                }
+                resultat.Add(niveauEnCours);
+                temp = niveauEnCours;
             }
+
             return resultat;
         }
-
+         
         // Obtient tout les successeurs
         public List<Predecesseur<T>> GetSuccesseur(T noeud)
         {
