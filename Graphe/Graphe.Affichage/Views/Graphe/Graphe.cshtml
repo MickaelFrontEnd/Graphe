@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.PageTitle = "Visualtisation du graphe et ses propriétés";
+}
+<div class="card" style="min-height:100vh">
+    <div class="card-body">
+        <div class="custom-tab">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="visualisation" data-toggle="tab" href="#visualisation-tab" role="tab" aria-controls="custom-nav-home" aria-selected="true">Visualisation</a>
+                    <a class="nav-item nav-link" id="cout" data-toggle="tab" href="#cout-tab" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Matrice de coût</a>
+                    <a class="nav-item nav-link" id="adjancence" data-toggle="tab" href="#adjacence-tab" role="tab" aria-controls="custom-nav-contact" aria-selected="false">Matrice d'adjacence</a>
+                    <a class="nav-item nav-link" id="dfs" data-toggle="tab" href="#dfs-tab" role="tab" aria-controls="custom-nav-contact" aria-selected="false">Parcours en profondeur</a>
+                    <a class="nav-item nav-link" id="bfs" data-toggle="tab" href="#bfs-tab" role="tab" aria-controls="custom-nav-contact" aria-selected="false">Parcours en largeur</a>
+                </div>
+            </nav>
+            <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="visualisation-tab" role="tabpanel" aria-labelledby="custom-nav-home-tab">
+                    <div id="vis-container" style="height:100vh">
+
+                    </div>
+                </div>
+                <div class="tab-pane fade show active" id="cout-tab" role="tabpanel" aria-labelledby="custom-nav-home-tab">
+                </div>
+                <div class="tab-pane fade show active" id="adjacence-tab" role="tabpanel" aria-labelledby="custom-nav-home-tab">
+                </div>
+                <div class="tab-pane fade show active" id="dfs-tab" role="tabpanel" aria-labelledby="custom-nav-home-tab">
+                    <div class="tab-pane fade show active" id="bfs-tab" role="tabpanel" aria-labelledby="custom-nav-home-tab">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/Graphe/_Modal.cshtml")
+@section Script {
+    <script src="~/Scripts/Graphe.js"></script>
+}
+
+
+
+

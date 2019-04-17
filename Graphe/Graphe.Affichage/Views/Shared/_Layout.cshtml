@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/Content/css/style.css">
+    <link rel="stylesheet" href="~/Content/css/vis.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -29,8 +30,9 @@
             @RenderBody()
         </div>
     </div>
-    <script src="~/Scripts/jquery/dist/jquery.min.js"></script>
-    <script src="~/Scripts/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>  
+    <script src="~/Scripts/vis.min.js"></script>
+    @RenderSection("Script", required: false)
 </body>
 </html>
