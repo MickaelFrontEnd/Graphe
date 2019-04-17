@@ -8,6 +8,11 @@ var container;
 var network;
 
 function initVis() {
+    initVisOptions(); 
+    initVisEvent();
+}
+
+function initVisOptions() {
     container = document.getElementById('vis-container');
     nodes = new vis.DataSet(nodesArray);
     edges = new vis.DataSet(edgesArray);
@@ -27,10 +32,33 @@ function initVis() {
         },
         edges: {
             width: 2,
-            shadow:true
+            shadow:true,
+            arrows: {
+                to:     {enabled: false, scaleFactor:1, type:'arrow'},
+                middle: {enabled: true, scaleFactor:1, type:'arrow'},
+                from:   {enabled: false, scaleFactor:1, type:'arrow'}
+            }
+        },
+        interaction: {
+            multiselect: true
+        },
+        manipulation: {
+            enabled: false,
+            addEdge: function(a,b) {
+                creerArcVis(a.from,a.to);
+            }
         }
     };
     network = new vis.Network(container, data, options);
+}
+
+function initVisEvent() {
+    network.on('selectNode',function(e){
+        var nodes = e.nodes;
+        if(nodes.length == 2) {        
+            network.addEdgeMode();
+        }
+    });
 }
 
 function creerNoeudVis(nom) {
@@ -40,6 +68,14 @@ function creerNoeudVis(nom) {
         group: 0
     });
     id++;
+}
+
+function creerArcVis(org,arv) {
+    edges.add({
+        from: org,
+        to: arv
+    });
+    edges.update(edgesArray);
 }
 
 function creerNoeudAPI(nom) {
