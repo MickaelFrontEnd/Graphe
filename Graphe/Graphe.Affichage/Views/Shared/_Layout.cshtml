@@ -1,0 +1,36 @@
+﻿<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Application de resolution des problèmes à partir du modèle de graphe</title>
+    <meta name="description" content="Sufee Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-icon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    @Html.Partial("~/Views/Shared/_Menu.cshtml")
+    <div id="right-panel" class="right-panel">
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>@ViewBag.PageTitle</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content mt-3">
+            @RenderBody()
+        </div>
+    </div>
+    <script src="~/Scripts/jquery/dist/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+</body>
+</html>
