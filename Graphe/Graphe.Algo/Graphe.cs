@@ -42,6 +42,14 @@ namespace Graphe
             AjouterNoeud(noeud, predecesseur);
         }
 
+        // Ajout noeud + un predecesseur + capacité + cout
+        public void AjouterNoeud(T noeud, Predecesseur<T> predecesseur, double capacite, double cout)
+        {
+            predecesseur.Capacite = capacite;
+            predecesseur.Cout = cout;
+            AjouterNoeud(noeud, predecesseur);
+        }
+
         // Ajout noeud + plusieur predecesseur
         public void AjouterNoeud(T noeud, List<Predecesseur<T>> predecesseurs)
         {
@@ -65,6 +73,12 @@ namespace Graphe
         public void AjouterArc(T A, T B, double capacite)
         {
             AjouterNoeud(B, new Predecesseur<T>(A), capacite);
+        }
+
+        // Ajout arc + capacite + cout
+        public void AjouterArc(T A, T B, double capacite, double cout)
+        {
+            AjouterNoeud(B, new Predecesseur<T>(A), capacite, cout);
         }
 
         // Degré moins

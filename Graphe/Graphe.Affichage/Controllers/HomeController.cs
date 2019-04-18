@@ -16,5 +16,11 @@ namespace Graphe.Affichage.Controllers
             ((Graphe<string>)Session["Graphe"]).AjouterNoeud(nomNoeud);
             return Json(new { status = "created" }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult AjouterArc(string noeudA,string noeudB,double capacite,double cout)
+        {
+            ((Graphe<string>)Session["Graphe"]).AjouterArc(noeudA,noeudB,capacite,cout);
+            return Json(new { status = "created" }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

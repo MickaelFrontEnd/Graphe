@@ -7,6 +7,7 @@ namespace Graphe
         public T Noeud { get; set; }
         public double Capacite { get; set; }
         public double Flot { get; set; }
+        public double Cout { get; set; }
 
         public Predecesseur()
         {

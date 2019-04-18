@@ -45,7 +45,9 @@ function initVisOptions() {
         manipulation: {
             enabled: false,
             addEdge: function(a,b) {
-                creerArcVis(a.from,a.to);
+                $('#ajouter-arc-modal').data('a',a.from);
+                $('#ajouter-arc-modal').data('b',a.to);
+                afficherAjouterArc();
             }
         }
     };
@@ -67,15 +69,24 @@ function creerNoeudVis(nom) {
         label: nom,
         group: 0
     });
+    nodesArray.push({
+        id: id,
+        label: nom,
+        group: 0
+    })
     id++;
 }
 
-function creerArcVis(org,arv) {
+function creerArcVis(org,arv,capacite,cout) {
     edges.add({
+        from: org,
+        to: arv,
+        label: '(' + capacite + ',' + cout + ')'
+    });
+    edgesArray.push({
         from: org,
         to: arv
     });
-    edges.update(edgesArray);
 }
 
 function creerNoeudAPI(nom) {
@@ -93,6 +104,30 @@ function creerNoeudAPI(nom) {
     );
 }
 
+function creerArcAPI(a,b) {
+    $.post(
+        URL + 'Home/AjouterArc',
+        {
+            noeudA: nodesArray[a].label,
+            noeudB: nodesArray[b].label,
+            capacite: $('#capacite-noeud').val(),
+            cout: $('#cout-noeud').val()
+        },
+        function(result) {
+            if(result.status === 'created') {
+                $('#ajouter-arc-modal').modal('hide');
+                creerArcVis(a,b,$('#capacite-noeud').val(),$('#cout-noeud').val());
+                $('#capacite-noeud').val('0');
+                $('#cout-noeud').val('0');
+            }
+        }   
+    );
+}
+
+function afficherAjouterArc() {
+    $('#ajouter-arc-modal').modal('show');
+}
+
 $(document).ready(function () {
     initVis();
 
@@ -101,6 +136,13 @@ $(document).ready(function () {
         var nom = $('#nom-noeud').val();
         creerNoeudAPI(nom);
         creerNoeudVis(nom);
+    });
+
+    $('#creer-arc-btn').click(function(e) {
+        e.preventDefault();
+        var a = $('#ajouter-arc-modal').data('a');
+        var b = $('#ajouter-arc-modal').data('b');
+        creerArcAPI(a,b);
     });
 });
 
