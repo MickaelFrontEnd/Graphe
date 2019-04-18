@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Graphe
 {
-    public partial class Graphe<T>
+    public partial class GrapheO<T>
     {
         // TODO: Refactoriser l'algorithme de Welsh and Powell
         public List<NoeudCouleur<T>> ColorerGraphe()

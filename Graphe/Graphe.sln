@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphe", "Graphe.Algo\Graphe.csproj", "{08A36F4F-F391-49AE-97E6-DA89E88E1C6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphe.Algo", "Graphe.Algo\Graphe.Algo.csproj", "{08A36F4F-F391-49AE-97E6-DA89E88E1C6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphe.Affichage", "Graphe.Affichage\Graphe.Affichage.csproj", "{E47710FB-750B-4631-AC72-D4189AF401E9}"
 EndProject

@@ -144,5 +144,13 @@ $(document).ready(function () {
         var b = $('#ajouter-arc-modal').data('b');
         creerArcAPI(a,b);
     });
+
+    $('#cout').click(function(e){
+        $('#cout-tab').load(URL + 'Home/GetMatriceCout');
+    });
+
+    $('#adjacence').click(function(e){
+        $('#adjacence-tab').load(URL + 'Home/GetMatriceAdjacence');
+    });
 });
 

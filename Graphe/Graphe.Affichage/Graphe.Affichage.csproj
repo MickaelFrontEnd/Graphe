@@ -149,6 +149,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -171,6 +173,8 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Graphe\Graphe.cshtml" />
     <Content Include="Views\Graphe\_Modal.cshtml" />
+    <Content Include="Views\Graphe\_MatriceCout.cshtml" />
+    <Content Include="Views\Graphe\_MatriceAdjacence.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -190,9 +194,9 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Graphe.Algo\Graphe.csproj">
+    <ProjectReference Include="..\Graphe.Algo\Graphe.Algo.csproj">
       <Project>{08a36f4f-f391-49ae-97e6-da89e88e1c6a}</Project>
-      <Name>Graphe</Name>
+      <Name>Graphe.Algo</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

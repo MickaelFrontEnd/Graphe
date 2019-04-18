@@ -1,0 +1,24 @@
+﻿@using Graphe;
+
+@{ 
+    var graphe = (GrapheO<string>)Session["Graphe"];
+}
+
+<table class="table table-bordered">
+    <th>
+        @foreach (var key in graphe.Predecesseurs.Keys)
+        {
+        <td>@key</td>
+        }
+    </th>
+    @foreach (var key in graphe.Predecesseurs.Keys)
+    {
+        <tr>
+            <td>@key</td>
+            @foreach (var a in graphe.Predecesseurs.Keys)
+            {
+                <td>@graphe.GetCout(key,a)</td>
+            }
+        </tr>
+    }
+</table>

@@ -6,7 +6,7 @@ namespace Graphe
 {
     public class Mpm
     {
-        public Graphe<Tache> Graphe { get; set; } = new Graphe<Tache>();
+        public GrapheO<Tache> Graphe { get; set; } = new GrapheO<Tache>();
 
         // Ajouter tache
         public void AjouterTache(Tache tache)

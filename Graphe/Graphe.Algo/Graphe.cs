@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace Graphe
 {
-    public partial class Graphe<T>
+    public partial class GrapheO<T>
     {
         // Propriété
         public Dictionary<T, List<Predecesseur<T>>> Predecesseurs { get; set; } = new Dictionary<T, List<Predecesseur<T>>>();
         public Dictionary<T, List<Predecesseur<T>>> Successeurs { get; set; } = new Dictionary<T, List<Predecesseur<T>>>();
 
         // Constructeur
-        public Graphe() { }
+        public GrapheO() { }
 
         // Ajout noeud
         public void AjouterNoeud(T noeud)
@@ -387,9 +387,9 @@ namespace Graphe
         }
 
         // Trier les noeuds par degrés decroissant
-        public Graphe<T> TrierParDegres(string ordre = "asc")
+        public GrapheO<T> TrierParDegres(string ordre = "asc")
         {
-            Graphe<T> graphe = new Graphe<T>();
+            GrapheO<T> graphe = new GrapheO<T>();
             List<NoeudDegre<T>> noeuds = new List<NoeudDegre<T>>();
 
             foreach (KeyValuePair<T,List<Predecesseur<T>>> entree in Predecesseurs)
@@ -434,7 +434,7 @@ namespace Graphe
         // Extraire sommet + ordre  des degrés
         public List<T> ExtraireSommet(string ordre = "asc")
         {
-            Graphe<T> graphe = TrierParDegres(ordre);
+            GrapheO<T> graphe = TrierParDegres(ordre);
             return graphe.ExtraireSommet();
         }
     }

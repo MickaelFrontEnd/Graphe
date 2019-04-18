@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Graphe
 {
-    public partial class Graphe<T>
+    public partial class GrapheO<T>
     {
         // Algorithme de Dijkstra
         public void GetChemin(Arbre<T> resultat, List<Noeud<T>> choisies, List<Noeud<T>> nonChoisies, T depart, double cout, int sens = 0)
