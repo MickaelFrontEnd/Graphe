@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 namespace Graphe.Affichage.Controllers
 {
@@ -12,8 +13,15 @@ namespace Graphe.Affichage.Controllers
 
         public JsonResult AjouterNoeud(string nomNoeud)
         {
-            ((GrapheO<string>)Session["Graphe"]).AjouterNoeud(nomNoeud);
-            return Json(new { status = "created" }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                ((GrapheO<string>)Session["Graphe"]).AjouterNoeud(nomNoeud);
+                return Json(new { status = "created" }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { status = "error", message= ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public JsonResult ModifierNoeud(string ancienNoeud, string nouveauNoeud)

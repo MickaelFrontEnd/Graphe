@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Graphe
@@ -15,13 +16,14 @@ namespace Graphe
         // Ajout noeud
         public void AjouterNoeud(T noeud)
         {
-            if (!Predecesseurs.ContainsKey(noeud))
+            if(!Predecesseurs.ContainsKey(noeud) && !Successeurs.ContainsKey(noeud))
             {
                 Predecesseurs.Add(noeud, new List<Predecesseur<T>>());
-            }
-            if (!Successeurs.ContainsKey(noeud))
-            {
                 Successeurs.Add(noeud, new List<Predecesseur<T>>());
+            }       
+            else
+            {
+                throw new Exception("Ce noeud existe déjà");
             }
         }
 

@@ -183,9 +183,14 @@
                     nomNoeud: nom
                 },
                 function (result) {
+                    $('#ajouter-noeud-modal').modal('hide');                      
+                    $('#nom-noeud').val('');
                     if (result.status === 'created') {
-                        $('#ajouter-noeud-modal').modal('hide');
-                        $('#nom-noeud').val('');
+                        creerNoeudVis(nom);
+                    }
+                    else if (result.status === 'error') {
+                        $('#erreur-modal .modal-body').html(result.message);
+                        $('#erreur-modal').modal('show');
                     }
                 }
             );
@@ -248,7 +253,6 @@
             e.preventDefault();
             var nom = $('#nom-noeud').val();
             creerNoeudAPI(nom);
-            creerNoeudVis(nom);
         });
 
         $('#modifier-noeud-btn').click(function (e) {
