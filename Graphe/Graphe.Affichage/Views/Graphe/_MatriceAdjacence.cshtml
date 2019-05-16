@@ -5,16 +5,17 @@
 }
 
 <table class="table table-bordered">
-    <th>
+    <tr>
+        <th></th>
         @foreach (var key in graphe.Predecesseurs.Keys)
         {
-            <td>@key</td>
+            <th>@key</th>
         }
-    </th>
+    </tr>
     @foreach (var key in graphe.Predecesseurs.Keys)
     {
         <tr>
-            <td>@key</td>
+            <td><strong>@key</strong></td>
             @foreach (var a in graphe.Predecesseurs.Keys)
             {
                 <td>@graphe.EstAdjacent(key, a)</td>

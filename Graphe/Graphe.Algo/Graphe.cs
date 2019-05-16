@@ -63,6 +63,17 @@ namespace Graphe
             }
         }
 
+        // Modification noeud
+        public void ModifierNoeud(T noeudAncien, T noeudNouveau)
+        {
+            List<Predecesseur<T>> predecesseurs = Predecesseurs[noeudAncien];
+            List<Predecesseur<T>> successeurs = Successeurs[noeudAncien];
+            Predecesseurs.Remove(noeudAncien);
+            Successeurs.Remove(noeudAncien);
+            Predecesseurs.Add(noeudNouveau, predecesseurs);
+            Successeurs.Add(noeudNouveau, successeurs);
+        }
+
         // Ajout arc
         public void AjouterArc(T A, T B)
         {

@@ -19,7 +19,7 @@ function initVisOptions() {
     var data = {
         nodes: nodes,
         edges: edges
-    }
+    };
     var options = {
         nodes: {
             shape: 'dot',
@@ -45,7 +45,7 @@ function initVisOptions() {
         manipulation: {
             enabled: false,
             addEdge: function(a,b) {
-                $('#ajouter-arc-modal').data('a',a.from);
+                $('#ajouter-arc-modal').data('a', a.from);
                 $('#ajouter-arc-modal').data('b',a.to);
                 afficherAjouterArc();
             }
@@ -73,7 +73,7 @@ function creerNoeudVis(nom) {
         id: id,
         label: nom,
         group: 0
-    })
+    });
     id++;
 }
 
@@ -128,8 +128,14 @@ function afficherAjouterArc() {
     $('#ajouter-arc-modal').modal('show');
 }
 
+function initData() {
+     graphe = Session["Graphe"];
+}
+
 $(document).ready(function () {
+
     initVis();
+    initData();
 
     $('#creer-noeud-btn').click(function(e) {
         e.preventDefault();

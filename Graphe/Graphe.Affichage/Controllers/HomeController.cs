@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Graphe;
 
 namespace Graphe.Affichage.Controllers
 {
@@ -7,7 +6,7 @@ namespace Graphe.Affichage.Controllers
     {
         public ActionResult Index()
         {
-            Session["Graphe"] = new GrapheO<string>();
+            Session["Graphe"] = Session["Graphe"] == null ? new GrapheO<string>() : Session["Graphe"];
             return View("~/Views/Graphe/Graphe.cshtml");
         }
 
@@ -15,6 +14,12 @@ namespace Graphe.Affichage.Controllers
         {
             ((GrapheO<string>)Session["Graphe"]).AjouterNoeud(nomNoeud);
             return Json(new { status = "created" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ModifierNoeud(string ancienNoeud, string nouveauNoeud)
+        {
+            ((GrapheO<string>)Session["Graphe"]).ModifierNoeud(ancienNoeud, nouveauNoeud);
+            return Json(new { status = "modified" }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult AjouterArc(string noeudA,string noeudB,double capacite,double cout)
