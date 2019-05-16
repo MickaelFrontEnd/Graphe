@@ -15,7 +15,7 @@ namespace Graphe.Affichage.Controllers
         {
             try
             {
-                ((GrapheO<string>)Session["Graphe"]).AjouterNoeud(nomNoeud);
+                ((GrapheO<string>)Session["Graphe"]).AjouterNoeud(nomNoeud, true);
                 return Json(new { status = "created" }, JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)

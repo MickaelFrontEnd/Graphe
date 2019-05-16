@@ -14,14 +14,14 @@ namespace Graphe
         public GrapheO() { }
 
         // Ajout noeud
-        public void AjouterNoeud(T noeud)
+        public void AjouterNoeud(T noeud, bool avecException = false)
         {
             if(!Predecesseurs.ContainsKey(noeud) && !Successeurs.ContainsKey(noeud))
             {
                 Predecesseurs.Add(noeud, new List<Predecesseur<T>>());
                 Successeurs.Add(noeud, new List<Predecesseur<T>>());
             }       
-            else
+            else if(avecException)
             {
                 throw new Exception("Ce noeud existe déjà");
             }
