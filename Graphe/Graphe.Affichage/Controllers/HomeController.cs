@@ -22,6 +22,12 @@ namespace Graphe.Affichage.Controllers
             return Json(new { status = "modified" }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult SupprimerNoeud(string noeud)
+        {
+            ((GrapheO<string>)Session["Graphe"]).SupprimerNoeud(noeud);
+            return Json(new { status = "deleted" }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult AjouterArc(string noeudA,string noeudB,double capacite,double cout)
         {
             ((GrapheO<string>)Session["Graphe"]).AjouterArc(noeudA,noeudB,capacite,cout);

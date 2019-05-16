@@ -103,6 +103,8 @@
                 $('#modifier-noeud-modal').attr('data-id', params.nodes[0]);
                 $('#modifier-noeud-modal').modal('show');
             });
+
+
         }
 
         function initVisEvent() {
@@ -153,6 +155,22 @@
                         $('#modifier-noeud-modal input[name="ancienNoeud"]').val('');
                         $('#modifier-noeud-modal input[name="nouveauNoeud"]').val('');
                         nodes.update({ id: id, label: nouveau });
+                    }
+                }
+            );
+        }
+
+        function supprimerNoeudAPI(id, noeud) {
+            $.post(
+                URL + 'Home/SupprimerNoeud',
+                {
+                    noeud: noeud,
+                },
+                function (result) {
+                    if (result.status === 'deleted') {
+                        $('#supprimer-noeud-modal').modal('hide');
+                        $('#supprimer-noeud-modal .modal-body').html('');
+                        nodes.remove({ id: id });
                     }
                 }
             );
@@ -242,6 +260,14 @@
             
         });
 
+        $('#supprimer-noeud-btn').click(function (e) {
+            e.preventDefault();          
+            var id = $('#supprimer-noeud-modal').attr('data-id');
+            var noeud = $('#supprimer-noeud-modal').attr('data-noeud');
+            supprimerNoeudAPI(id, noeud);
+
+        });
+
         $('#creer-arc-btn').click(function (e) {
             e.preventDefault();
             var a = $('#ajouter-arc-modal').data('a');
@@ -255,6 +281,18 @@
 
         $('#adjacence').click(function (e) {
             $('#adjacence-tab').load(URL + 'Home/GetMatriceAdjacence');
+        });
+
+        $(document).keyup(function (e) {
+            if (e.keyCode == 46) { // delete button pressed
+                var selection = network.getSelection();
+                if (selection && selection.nodes.length === 1) {
+                    $('#supprimer-noeud-modal').attr('data-id', selection.nodes[0]); 
+                    $('#supprimer-noeud-modal').attr('data-noeud', nodesArray[selection.nodes[0]].label);
+                    $('#supprimer-noeud-modal .modal-body').html('Voulez-vous vraiment supprimer le noeud ' + nodesArray[selection.nodes[0]].label);
+                    $('#supprimer-noeud-modal').modal('show');
+                }
+            }
         });
 
         initVis();
