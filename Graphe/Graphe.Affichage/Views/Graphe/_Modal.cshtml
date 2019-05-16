@@ -23,6 +23,32 @@
     </div>
 </div>
 
+<div class="modal fade" id="modifier-noeud-modal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="smallmodalLabel">Modifier un noeud</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nom-noeud" class="control-label mb-1">Nom</label>
+                        <input id="nom-noeud" name="nouveauNoeud" type="text" class="form-control" aria-required="true" aria-invalid="false" required>
+                        <input id="nom-noeud" name="ancienNoeud" type="hidden" class="form-control" aria-required="true" aria-invalid="false" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" id="modifier-noeud-btn">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="ajouter-arc-modal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">

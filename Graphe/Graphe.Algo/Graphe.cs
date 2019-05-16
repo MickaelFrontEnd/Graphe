@@ -68,10 +68,34 @@ namespace Graphe
         {
             List<Predecesseur<T>> predecesseurs = Predecesseurs[noeudAncien];
             List<Predecesseur<T>> successeurs = Successeurs[noeudAncien];
+
             Predecesseurs.Remove(noeudAncien);
             Successeurs.Remove(noeudAncien);
+
             Predecesseurs.Add(noeudNouveau, predecesseurs);
             Successeurs.Add(noeudNouveau, successeurs);
+
+            foreach (var key in Predecesseurs.Keys)
+            {
+                foreach(var item in Predecesseurs[key])
+                {
+                    if(item.Noeud.Equals(noeudAncien))
+                    {
+                        item.Noeud = noeudNouveau;
+                    }
+                }
+            }
+
+            foreach (var key in Successeurs.Keys)
+            {
+                foreach (var item in Successeurs[key])
+                {
+                    if (item.Noeud.Equals(noeudAncien))
+                    {
+                        item.Noeud = noeudNouveau;
+                    }
+                }
+            }
         }
 
         // Ajout arc

@@ -89,13 +89,20 @@
                         $('#ajouter-arc-modal').data('a', a.from);
                         $('#ajouter-arc-modal').data('b', a.to);
                         afficherAjouterArc();
-                    }
+                    },
                 },
                 physics: {
                     enabled: false
                 }
             };
             network = new vis.Network(container, data, options);
+
+            network.on('doubleClick', function (params) {
+                $('#modifier-noeud-modal input[name="ancienNoeud"]').val(nodesArray[params.nodes[0]].label);
+                $('#modifier-noeud-modal input[name="nouveauNoeud"]').val(nodesArray[params.nodes[0]].label);
+                $('#modifier-noeud-modal').attr('data-id', params.nodes[0]);
+                $('#modifier-noeud-modal').modal('show');
+            });
         }
 
         function initVisEvent() {
@@ -131,6 +138,24 @@
                 from: org,
                 to: arv
             });
+        }
+
+        function modifierNoeudAPI(id, ancien, nouveau) {
+            $.post(
+                URL + 'Home/ModifierNoeud',
+                {
+                    ancienNoeud: ancien,
+                    nouveauNoeud: nouveau
+                },
+                function (result) {
+                    if (result.status === 'modified') {
+                        $('#modifier-noeud-modal').modal('hide');
+                        $('#modifier-noeud-modal input[name="ancienNoeud"]').val('');
+                        $('#modifier-noeud-modal input[name="nouveauNoeud"]').val('');
+                        nodes.update({ id: id, label: nouveau });
+                    }
+                }
+            );
         }
 
         function creerNoeudAPI(nom) {
@@ -206,6 +231,15 @@
             var nom = $('#nom-noeud').val();
             creerNoeudAPI(nom);
             creerNoeudVis(nom);
+        });
+
+        $('#modifier-noeud-btn').click(function (e) {
+            e.preventDefault();
+            var ancien = $('#modifier-noeud-modal input[name="ancienNoeud"]').val();
+            var nouveau = $('#modifier-noeud-modal input[name="nouveauNoeud"]').val();
+            var id = $('#modifier-noeud-modal').attr('data-id');
+            modifierNoeudAPI(id, ancien, nouveau);
+            
         });
 
         $('#creer-arc-btn').click(function (e) {
